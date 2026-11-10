@@ -1,0 +1,6 @@
+(function(root){
+const units={Selçuklu:{Gulam:66,Kemankeş:66,'Selçuk Bey':54,Alparslan:75,Kargılı:90,'Atlı Okçu':135,Sipahi:105,Mancınık:25,Top:15},Hun:{Toygun:72,Kemankeş:72,Tarık:60,Barlas:81,Tunga:120,Talakan:150,Tarkan:120,Mancınık:25,Top:15},Göktürk:{Karabudun:54,Kemankeş:60,Topukçu:48,'Mavi Kurt':75,Muhafız:90,'Mavi Atlı':120,Kürşat:90,Mancınık:25,Top:15}};
+function duration(distance,race,name,diamond,config={factor:1800,hunBonus:1.1}){const speed=units[race]?.[name];if(!Number.isFinite(distance)||distance<0||!speed)throw Error('Mesafeyi ve asker seçimini kontrol et.');return distance*config.factor/(speed*(race==='Hun'?config.hunBonus:1))/(diamond?2:1)}
+function plan(arrival,enemySeconds,ownSeconds){if(!Number.isFinite(arrival))throw Error('Geçerli bir varış tarihi ve saati gir.');return {departure:arrival-enemySeconds*1000,arrival,returnAt:arrival+enemySeconds*1000,sendAt:arrival+(enemySeconds-ownSeconds)*1000}}
+const api={units,duration,plan};if(typeof module!=='undefined')module.exports=api;else root.KilitEngine=api;
+})(typeof window!=='undefined'?window:globalThis);
